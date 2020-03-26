@@ -7,4 +7,4 @@ export class Post {
   content: string
 }
 
-export const PostModel = getModelForClass(Post)
+// export const PostModel = getModelForClass(Post)
