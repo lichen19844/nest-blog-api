@@ -1,9 +1,11 @@
 import { Controller, Get, Post, Body, Query, Param, Put, Delete } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiProperty } from '@nestjs/swagger';
+// 不再需要引入模型PostModel
 // import { PostModel } from './post.model';
 import { IsNotEmpty } from 'class-validator'
 import { InjectModel } from 'nestjs-typegoose';
 import { Post as PostSchema } from './post.model';
+import { ModelType } from '@typegoose/typegoose/lib/types';
 
 // 定义DTO数据传输对象
 // 为了标识创建帖子的数据，是一种规范
@@ -27,7 +29,7 @@ class UpdatePostDto {
 @ApiTags('帖子')
 export class PostsController {
   constructor(
-    @InjectModel(PostSchema) private readonly PostModel
+    @InjectModel(PostSchema) private readonly PostModel: ModelType<PostSchema>
   ){}
   @Get()  // 也可以写成@Get('/')
   @ApiOperation({ summary: '显示帖子列表' })
