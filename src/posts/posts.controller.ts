@@ -1,11 +1,13 @@
+// 使用crud包
+
 import { Controller, Get, Post, Body, Query, Param, Put, Delete } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiProperty } from '@nestjs/swagger';
-// 不再需要引入模型PostModel
+// 为了解耦，不再需要引入模型PostModel
 // import { PostModel } from './post.model';
 import { IsNotEmpty } from 'class-validator'
 import { InjectModel } from 'nestjs-typegoose';
 import { Post as PostSchema } from './post.model';
-import { ModelType } from '@typegoose/typegoose/lib/types';
+import { ModelType, ReturnModelType } from '@typegoose/typegoose/lib/types';
 import { Crud } from 'nestjs-mongoose-crud';
 
 // 定义DTO数据传输对象
@@ -18,7 +20,8 @@ class CreatePostDto {
   content: string
 }
 // // 为了标识更新帖子的数据，是一种规范
-// class UpdatePostDto {
+// // class UpdatePostDto {
+// export class UpdatePostDto {
 //   @ApiProperty({ description: '帖子标题' })
 //   title: string
 //   @ApiProperty({ description: '帖子内容' })
@@ -52,7 +55,8 @@ class CreatePostDto {
 export class PostsController {
   constructor(
     // @InjectModel(PostSchema) private readonly PostModel: ModelType<PostSchema>
-    @InjectModel(PostSchema) private readonly model: ModelType<PostSchema>
+    // @InjectModel(PostSchema) private readonly model: ModelType<PostSchema>
+    @InjectModel(PostSchema) private readonly model: ReturnModelType<typeof PostSchema>
   ){}
 
   // @Get()  // 也可以写成@Get('/')
